@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node --watch server",
-    "dev": "node --watch server"
+    "start": "node --watch --env-file=.env server",
+    "dev": "node --watch --env-file=.env server"
   },
   "keywords": [],
   "author": "",
