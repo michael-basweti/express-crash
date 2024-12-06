@@ -31,9 +31,6 @@ router.get('/:id', (request,response) => {
 // create new post
 
 router.post('/',(req, res) =>{
-    console.log('====================================');
-    console.log(req.body);
-    console.log('====================================');
 
     const newPost = {
         id:posts.length+1,
@@ -46,7 +43,7 @@ router.post('/',(req, res) =>{
 
     const newPosts = [...posts,newPost]
 
-    return res.status(200).json(newPosts)
+    res.status(200).json(newPosts)
 });
 
 // put request
@@ -61,7 +58,7 @@ router.put('/:id',(req,res)=>{
         post.title = req.body.title;
         // const newPosts = [...posts,post]
 
-    return res.status(200).json(posts)
+    res.status(200).json(posts)
 
     }
 });
