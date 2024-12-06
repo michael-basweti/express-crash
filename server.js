@@ -34,6 +34,12 @@ app.use(logger)
 
 app.use('/api/posts',posts)
 
+app.use((req,res,next)=>{
+    const error = new Error('not found')
+    error.status = 404
+    next(error)
+})
+
 app.use(errorHandler)
 
 app.listen(port, () => console.log(`server is running on port ${port}`))
