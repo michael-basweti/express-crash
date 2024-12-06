@@ -16,11 +16,13 @@ router.get('/', (request,response) => {
 
 
 // get single post
-router.get('/:id', (request,response) => {
+router.get('/:id', (request,response, next) => {
     const id = parseInt(request.params.id)
     const post = posts.find((post) => post.id === id)
     if(!post){
-        response.status(404).json({message:"post doesn't exist"})
+        const err = new Error(`post with id ${id} doesn't exist`)
+        err.status = 404
+        next(err)
     }else{
         // let singlepost = posts.filter((post) => post.id === id)
         response.status(200).json(post)
@@ -30,7 +32,7 @@ router.get('/:id', (request,response) => {
 
 // create new post
 
-router.post('/',(req, res) =>{
+router.post('/',(req, res,next) =>{
 
     const newPost = {
         id:posts.length+1,
@@ -38,7 +40,10 @@ router.post('/',(req, res) =>{
     }
 
     if(!newPost.title){
-        return res.status(400).json({message:"no title sent"})
+        const err = new Error(`no title sent`)
+        err.status = 400
+        next(err)
+        // return res.status(400).json({message:"no title sent"})
     }
 
     const newPosts = [...posts,newPost]
@@ -47,11 +52,13 @@ router.post('/',(req, res) =>{
 });
 
 // put request
-router.put('/:id',(req,res)=>{
+router.put('/:id',(req,res,next)=>{
     const id = parseInt(req.params.id)
     const post = posts.find((post) => post.id === id)
     if(!post){
-        response.status(404).json({message:"post doesn't exist"})
+        const err = new Error(`post with id ${id} doesn't exist`)
+        err.status = 404
+        next(err)
     }else{
         // let singlepost = posts.filter((post) => post.id === id)
         // response.status(200).json(post)
@@ -65,11 +72,13 @@ router.put('/:id',(req,res)=>{
 
 
 // delete request
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',(req,res,next)=>{
     const id = parseInt(req.params.id)
     const post = posts.find((post) => post.id === id)
     if(!post){
-        response.status(404).json({message:"post doesn't exist"})
+        const err = new Error(`post with id ${id} doesn't exist`)
+        err.status = 404
+        next(err)
     }else{
         posts = posts.filter((post)=>post.id !== id);
 

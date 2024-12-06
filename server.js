@@ -3,6 +3,7 @@ import path from 'path'
 const port = process.env.PORT || 8000
 import posts from './routes/posts.js';
 import logger from './middleware/logger.js';
+import errorHandler from './middleware/error.js';
 
 const app = express()
 
@@ -33,6 +34,6 @@ app.use(logger)
 
 app.use('/api/posts',posts)
 
-
+app.use(errorHandler)
 
 app.listen(port, () => console.log(`server is running on port ${port}`))
