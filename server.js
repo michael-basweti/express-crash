@@ -1,9 +1,13 @@
 import express from 'express';
 import path from 'path'
 const port = process.env.PORT || 8000
+import {fileURLToPath} from 'url'
 import posts from './routes/posts.js';
 import logger from './middleware/logger.js';
 import errorHandler from './middleware/error.js';
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
@@ -15,7 +19,7 @@ app.use(express.urlencoded({extended:false}));
 // logger middleware
 app.use(logger)
 // setup static folder
-
+app.use(express.static(path.join(__dirname,'public')));
 // app.use(express.static(path.join(__dirname,'public')))
 
 // app.get('/', (req, res) => {

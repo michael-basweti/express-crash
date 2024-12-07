@@ -29,24 +29,21 @@ export const getSinglePost = (request,response, next) => {
 
 // @desc Create Post
 // route POST /api/posts
-export const createPost = (req, res,next) =>{
-
+export const createPost = (req, res, next) => {
     const newPost = {
-        id:posts.length+1,
-        title: req.body.title
+      id: posts.length + 1,
+      title: req.body.title,
+    };
+  
+    if (!newPost.title) {
+      const error = new Error(`Please include a title`);
+      error.status = 400;
+      return next(error);
     }
-
-    if(!newPost.title){
-        const err = new Error(`no title sent`)
-        err.status = 400
-        next(err)
-        // return res.status(400).json({message:"no title sent"})
-    }
-
-    const newPosts = [...posts,newPost]
-
-    res.status(200).json(newPosts)
-}
+  
+    posts.push(newPost);
+    res.status(201).json(posts);
+  };
 
 
 // @edit post
